@@ -28,7 +28,6 @@ public class GameController : MonoBehaviour
             playerList[i] = playerGoList[i].GetComponent<PlayerController>();
         }
         caseList = GameObject.FindGameObjectsWithTag("case");
-        
         //il est impossible de faire :
         //PlayerController[] playerList;
         //playerList = GameObject.FindGameObjectsWithTag("Player").getComponent<PlayerController>();
@@ -51,23 +50,22 @@ public class GameController : MonoBehaviour
         for (int i = 0; i < playerList.Length; i++)
         {            
             //il faut récup la case sur laquelle on est et faire +1 pour se déplacer a la case suivante
-            isEndBoard();
+            isEndBoard(i);
             playerList[i].playTurn(caseList[playerList[i].getNextCase()].transform);
         }
     }
 
-    private void isEndBoard()
+    private void isEndBoard(int i)
     {
-        for (int i = 0; i < playerList.Length; i++)
+       
+        //il faut récup la case sur laquelle on est et faire +1 pour se déplacer a la case suivante
+        if (caseList.Length == playerList[i].getCurrentCase()+1)
         {
-            //il faut récup la case sur laquelle on est et faire +1 pour se déplacer a la case suivante
-            if(caseList.Length == playerList[i].getCurrentCase())
-            {
-                playerList[i].setNextCase(0);
-                playerList[i].setCurrentCase(0);
-
-            }
-
+            playerList[i].setNextCase(0);
+            playerList[i].setCurrentCase(0);
+            print("is end board");
         }
+
+        
     }
 }
