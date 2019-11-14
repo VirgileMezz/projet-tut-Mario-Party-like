@@ -78,10 +78,10 @@ public class GameController : MonoBehaviour
     {
 
         //il faut récup la case sur laquelle on est et faire +1 pour se déplacer a la case suivante
-        if (caseList.Length == playerList[i].getCurrentCase() + 1)
+        if (caseList.Length == playerList[i].getCurrentCase() +1 )
         {
             playerList[i].setNextCase(0);
-            playerList[i].setCurrentCase(0);
+            playerList[i].setCurrentCase(-1);
             print("is end board");
         }
 
