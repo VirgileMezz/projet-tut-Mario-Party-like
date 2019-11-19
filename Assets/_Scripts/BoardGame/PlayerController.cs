@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
         
     }
 
+    //on déplace le joueur d'une case et on actualise sa valeur de case ou il est et la suivante
     public void playTurn(Transform t)
     {
         Debug.Log("play turn !");

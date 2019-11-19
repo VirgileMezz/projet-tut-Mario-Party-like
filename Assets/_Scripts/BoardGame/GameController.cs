@@ -44,10 +44,11 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //en attendant pour les tests, juste pour pas que ça s'active instant
-        //appuyer sur espace pour lancer les tours (tout va se lancer d'un coup)
+        //ce qui permet de se déplacer, CanMove est mise a true quand on appelle la fonction "setMoving(int i)" définie plus bas dans le code et utilisé dans la classe UiController
+        //en l'occurence quand on appuie sur un des bouton de déplacement (1,2,3...)
         if (canMove)
         {
+            //on appelle alors la fonction "playerTurn()" définie plus bas
             playerTurn();
         }
 
@@ -56,28 +57,34 @@ public class GameController : MonoBehaviour
 
     private void playerTurn()
     {
-
+        //on affiche (et rend actif) les boutons de déplacement
         buttonPanel.SetActive(true);
 
+        //on fait une boucle pour déplacer le joueur actuel n fois (movingTime ici), movingTime est attribué dans la méthode "setMoving(int i)" quand elle est appellé dans UiController
+        //movingTime prend comme valeur le paramètre i passé dans "setMoving(int i)"
         for (int j = 0; j < movingTime; j++)
         {
             print("current player : " + currentPlayer);
+            //on appelle isEndBoard définie plus bas pour le joueur actuel
             isEndBoard(currentPlayer);
+
+            //on appelle la fonction "playTurn" du joueur actuel définie dans la classe PlayerController pour avancer
             playerList[currentPlayer].playTurn(caseList[playerList[currentPlayer].getNextCase()].transform);
             print("looping");
         }
-        //il faut récup la case sur laquelle on est et faire +1 pour se déplacer a la case suivante
+        
+        //on reinitialise les valeurs canMove et movingTime pour le prochain joueur
         canMove = false;
         movingTime = 0;
+        //on appelle currentPlayerCheck() définie plus bas
         currentPlayerCheck();
 
 
     }
 
+    //isEndBoard va checker si on est a la fin du plateau pour pouvoir refaire un tour
     private void isEndBoard(int i)
     {
-
-        //il faut récup la case sur laquelle on est et faire +1 pour se déplacer a la case suivante
         if (caseList.Length == playerList[i].getCurrentCase() +1 )
         {
             playerList[i].setNextCase(0);
@@ -87,6 +94,8 @@ public class GameController : MonoBehaviour
 
 
     }
+
+    //fonction qui sert a changer de joueur et pour checker si le dernier joueur a jouer pour recommencer un tour de joueurs
     private void currentPlayerCheck(){
         currentPlayer++;
         if (currentPlayer > playerList.Length-1)

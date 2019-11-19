@@ -11,14 +11,20 @@ public class UiController : MonoBehaviour
     {
         gc = GameObject.Find("GameController").GetComponent<GameController>();
     }
+
+    //fonction qu'on met sur les bouttons pour choisir une valeur de déplacement
     public void buttonChooseValue(int i)
     {
         gc.setMoving(i);
     }
+
+    //fonction servant a désactiver un GameObject en cliquant sur un boutton
     public void desactivateObjectOnClic(GameObject o)
     {
         o.SetActive(false);
     }
+
+    //fonction servant a activer un GameObject en cliquant sur un boutton
     public void activateObjectOnClic(GameObject o)
     {
         o.SetActive(true);
