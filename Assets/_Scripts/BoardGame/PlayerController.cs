@@ -4,58 +4,77 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-
-    private int currentCase = -1; //-1 car le debut de la partie ne commence pas sur une case
-    private int nextCase = 0; //0 car la la première case sera le premier déplacement
-    private float moveSpeed = 1.0f;
-    private int moveNumber = 0;
+    public int currentCel;
+    public Transform playerT;
+    public bool isMoving = false;
+    public int movingTime;
+    public int compteur = 0;
+    public bool entour=false;
+    public int compteurTour;
+    private PlateauController plateauController;
+    private GameObject plateau;
     // Start is called before the first frame update
     void Start()
     {
+        playerT = GetComponentInParent<Transform>();
+        currentCel = 1;
+        compteurTour = 0;
+        compteur = 0;
+        movingTime = 0;
+        plateau = GameObject.FindGameObjectsWithTag("Plateau")[0];
+        plateauController = plateau.GetComponent<PlateauController>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
-    //on déplace le joueur d'une case et on actualise sa valeur de case ou il est et la suivante
     public void playTurn(Transform t)
     {
         Debug.Log("play turn !");
-        //je fait tp les joueurs en attendant
-        transform.position = t.position;
-        print("current case : "+currentCase);
-        print("next case : " + nextCase);
-        currentCase++;
-        nextCase = currentCase + 1;
+        Vector3 position = new Vector3(t.position.x, playerT.position.y, t.position.z);
+        playerT.position=Vector3.MoveTowards(playerT.position, position, 2f);
+
+        if (playerT.position == position)
+        {
+            currentCel++;
+            isMoving = false;
+        }
+        if (currentCel > plateauController.NB_CELLS - 1)
+        {
+            currentCel = 0;
+            addTour();
+        }
+        print(currentCel);
+        //print(int);
     }
 
 
     public int getCurrentCase()
     {
-        return this.currentCase;
-    }
-    public void setCurrentCase(int i)
-    {
-        this.currentCase = i;
-    }
-    public int getNextCase()
-    {
-        return this.nextCase;
-    }
-    public void setNextCase(int i)
-    {
-        this.nextCase = i;
+        return this.currentCel;
     }
 
-    public int getMoveNumber()
+    public void setCurrentCase(int cel)
     {
-        return moveNumber;
+        //Vector3.MoveTowards(playerT.position, cel.transform.position, 2f);
+        //playerT.position = new Vector3(cel.transform.position.x, playerT.position.y, cel.transform.position.z);
+        this.currentCel = cel;
     }
-    public void setMoveNumber(int i)
+
+    public void setPosition(Vector3 position) {
+        playerT.position = position;
+    }
+
+    public int getCompteurTour()
     {
-        this.moveNumber = i;
+        return compteurTour;
+    }
+
+    public void addTour()
+    {
+        compteurTour++;
     }
 }
