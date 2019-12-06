@@ -18,7 +18,7 @@ public class GameController : MonoBehaviour
     private bool canMove;
 
     private GameObject buttonPanel;
-    // Start is called before the first frame update
+    // Start is called before the first frame update.
     void Start()
     {
         //dans un nouveau tableau on cherche d'abord tout les GameObjects avec le tag "Player",
